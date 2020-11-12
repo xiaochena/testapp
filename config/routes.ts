@@ -24,6 +24,11 @@ export default [
         name: '核心JSX',
         component: './ReactSeries/1.CoreJSX',
       },
+      {
+        path: '/react_series/use_state_callback',
+        name: 'useStateCallback',
+        component: './ReactSeries/useStateCallback',
+      },
     ],
   },
 ];
