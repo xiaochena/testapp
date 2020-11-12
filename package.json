@@ -23,6 +23,7 @@
     "@ant-design/pro-layout": "^6.5.14",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.2.27",
+    "highlight.js": "^10.3.2",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
     "react": "^16.12.0",

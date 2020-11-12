@@ -1,41 +1,58 @@
-import React from 'react';
-import { Card, Typography } from 'antd';
+import React, { useEffect } from 'react';
+import { Card, Typography, Row, Col } from 'antd'; // @ts-ignore
+import hljs from 'highlight.js/lib/core'; // @ts-ignore
+import javascript from 'highlight.js/lib/languages/javascript';
 
+import 'highlight.js/styles/atom-one-dark.css';
+
+import Iframe from './Iframe';
+
+hljs.registerLanguage('javascript', javascript);
 const { Paragraph } = Typography;
 
 const CoreJSX_1: React.FC = () => {
+  useEffect(() => {
+    document.querySelectorAll('pre code').forEach((block: any) => {
+      console.log(block, 'block');
+      try {
+        hljs.highlightBlock(block);
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  }, []);
+
   return (
     <>
       <Card title="类的定义">
-        <Paragraph>在ES6之前，我们通过function来定义类，</Paragraph>
-        <Paragraph>
-          <pre>{`class Person {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-  }
-
-  running() {
-    console.log(this.name + this.age + "running");
-  }
+        <Row gutter={16}>
+          <Col span={10}>
+            <Paragraph>
+              在ES6之前，我们通过function来定义类,
+              <br />
+              然鹅，大多数面向对象的语言，都是使用class关键字来定义类的。
+              而JavaScript也从ES6开始引入了class关键字，用于定义一个类。
+            </Paragraph>
+            <pre>
+              <code>
+                {`function Person(name, age) {
+  this.name = name;
+  this.age = age;
 }
 
-const p = new Person("why", 18);
-p.running();`}</pre>
-        </Paragraph>
-        <iframe
-          src="https://codesandbox.io/embed/leidedingyi-6xns6?previewwindow=console&hidedevtools=1&fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.js&moduleview=1&theme=dark"
-          style={{
-            width: '100%',
-            height: '500px',
-            border: 0,
-            borderRadius: '4px',
-            overflow: 'hidden',
-          }}
-          title="类的定义"
-          allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-          sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-        ></iframe>
+Person.prototype.running = function () {
+  console.log(this.name + this.age + "running");
+};
+
+var p = new Person("Chen", 18);
+p.running();`}
+              </code>
+            </pre>
+          </Col>
+          <Col span={14}>
+            <Iframe />
+          </Col>
+        </Row>
       </Card>
     </>
   );
