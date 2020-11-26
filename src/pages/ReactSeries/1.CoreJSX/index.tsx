@@ -13,7 +13,6 @@ const { Paragraph } = Typography;
 const CoreJSX_1: React.FC = () => {
   useEffect(() => {
     document.querySelectorAll('pre code').forEach((block: any) => {
-      console.log(block, 'block');
       try {
         hljs.highlightBlock(block);
       } catch (e) {

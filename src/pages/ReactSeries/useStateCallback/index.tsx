@@ -9,7 +9,6 @@ const StateCallback: React.FC = () => {
   const onClick = () => {
     setTimeout(() => {
       setNumber(number ? number + 1 : 1, (value: any) => {
-        console.log(value, 'value');
         setNumberAdd(value + 1);
       });
     }, 0);
