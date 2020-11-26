@@ -18,6 +18,7 @@ export default [
   {
     path: '/react_series',
     name: 'React系列',
+    icon: 'code',
     routes: [
       {
         path: '/react_series/1.CoreJSX',
