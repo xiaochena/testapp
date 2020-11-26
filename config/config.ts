@@ -7,5 +7,8 @@ export default defineConfig({
     type: 'none',
   },
   layout: defaultSettings,
+  locale: {
+    default: 'zh-CN',
+  },
   routes: routes,
 });
