@@ -26,6 +26,11 @@ export default [
         component: './ReactSeries/1.CoreJSX',
       },
       {
+        path: '/react_series/React生命周期',
+        name: 'React生命周期',
+        component: './ReactSeries/React生命周期',
+      },
+      {
         path: '/react_series/use_state_callback',
         name: 'useStateCallback',
         component: './ReactSeries/useStateCallback',
