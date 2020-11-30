@@ -15,7 +15,7 @@ export default (): React.ReactNode => (
   <>
     <Card>
       <Alert
-        message="Json Schema 风格的 CRUD。"
+        message="谁便写写Demo"
         type="success"
         showIcon
         banner
@@ -25,7 +25,7 @@ export default (): React.ReactNode => (
         }}
       />
       <Typography.Text strong>
-        Json Schema CRUD{' '}
+        谁便写写Demo
         <a
           href="https://www.npmjs.com/package/schema-page"
           rel="noopener noreferrer"
