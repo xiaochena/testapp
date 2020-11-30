@@ -54,4 +54,16 @@ export default [
       },
     ],
   },
+  {
+    path: '/Echarts',
+    name: '上手 ECharts',
+    icon: 'SlackOutlined',
+    routes: [
+      {
+        path: '/Echarts/上手 ECharts',
+        name: '01-上手 ECharts',
+        component: './Echarts/01-上手 ECharts',
+      },
+    ],
+  },
 ];
