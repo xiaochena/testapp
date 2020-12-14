@@ -34,7 +34,7 @@ export default (): React.ReactNode => (
           欢迎使用
         </a>
       </Typography.Text>
-      <CodePreview>yarn add schema-page</CodePreview>
+      <CodePreview>react、umi</CodePreview>
     </Card>
   </>
 );

@@ -31,6 +31,11 @@ export default [
         component: './ReactSeries/React生命周期',
       },
       {
+        path: '/react_series/Redux',
+        name: 'Redux',
+        component: './ReactSeries/Redux',
+      },
+      {
         path: '/react_series/use_state_callback',
         name: 'useStateCallback',
         component: './ReactSeries/useStateCallback',
