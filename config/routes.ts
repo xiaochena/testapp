@@ -60,6 +60,11 @@ export default [
     icon: 'SlackOutlined',
     routes: [
       {
+        path: '/Echarts/00-工作中Echarts',
+        name: '00-工作中Echarts',
+        component: './Echarts/00-工作中Echarts',
+      },
+      {
         path: '/Echarts/01-上手ECharts',
         name: '01-上手ECharts',
         component: './Echarts/01-上手ECharts',
