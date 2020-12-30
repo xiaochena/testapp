@@ -41,21 +41,24 @@ const DragECharts: React.FC = () => {
       });
 
       myChart.setOption({
-        graphic: echarts.util.map(data, (item, dataIndex) => {
-          return {
-            type: 'circle',
-            position: myChart.convertToPixel('grid', item),
-            shape: {
-              r: symbolSize / 2,
-            },
-            invisible: true,
-            draggable: true,
-            ondrag: echarts.util.curry(onPointDragging, dataIndex),
-            onmousemove: echarts.util.curry(showTooltip, dataIndex),
-            onmouseout: echarts.util.curry(hideTooltip, dataIndex),
-            z: 100,
-          };
-        }),
+        graphic: (echarts as any).util.map(
+          data,
+          (item: any, dataIndex: any) => {
+            return {
+              type: 'circle',
+              position: myChart.convertToPixel('grid', item),
+              shape: {
+                r: symbolSize / 2,
+              },
+              invisible: true,
+              draggable: true,
+              ondrag: (echarts as any).util.curry(onPointDragging, dataIndex),
+              onmousemove: (echarts as any).util.curry(showTooltip, dataIndex),
+              onmouseout: (echarts as any).util.curry(hideTooltip, dataIndex),
+              z: 100,
+            };
+          },
+        ),
       });
 
       function onPointDragging(dataIndex: any, dx: any, dy: any) {
@@ -87,7 +90,7 @@ const DragECharts: React.FC = () => {
   }, []);
 
   return (
-    <Card bodyStyle={{ display: 'flex' }} title="ECharts 入门示例">
+    <Card bodyStyle={{ display: 'flex' }} title="ECharts 拖拽">
       <div style={{ height: 300, flex: 1 }} ref={echartsRef1}></div>
       <div style={{ height: 300, flex: 1 }}></div>
       <div style={{ height: 300, flex: 1 }}></div>
