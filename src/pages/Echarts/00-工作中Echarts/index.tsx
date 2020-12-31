@@ -29,59 +29,58 @@ const GetStartedECharts: React.FC = () => {
       '2020-12-27',
       '2020-12-28',
       '2020-12-29',
+      '2020-12-30',
     ];
     const Increment = [
-      1200,
-      1400,
-      -200,
-      1200,
-      1100,
-      -120,
-      -90,
-      1200,
-      1400,
-      -200,
-      1200,
-      1100,
-      -120,
-      -90,
-      1200,
-      1400,
-      -200,
-      1200,
-      1100,
-      -120,
-      -90,
+      120,
+      -140,
+      200,
+      120,
+      110,
+      12,
+      9,
+      120,
+      140,
+      20,
+      120,
+      110,
+      12,
+      9,
+      120,
+      140,
+      20,
+      120,
+      110,
+      12,
     ];
     const Total = [
-      1000,
-      2000,
-      1900,
-      1400,
-      1800,
-      1800,
-      1400,
-      1000,
-      2000,
-      1900,
-      1400,
-      1800,
-      1800,
-      1400,
-      1000,
-      2000,
-      1900,
-      1400,
-      1800,
-      1800,
-      1400,
+      10000,
+      20000,
+      19000,
+      14000,
+      18000,
+      18000,
+      14000,
+      10000,
+      17000,
+      16000,
+      14000,
+      18000,
+      18000,
+      14000,
+      10000,
+      20000,
+      19000,
+      14000,
+      18000,
+      18000,
     ];
 
     if (echartsRef1.current) {
+      let intervalNum = 0;
       var myChart = echartsRef1.current && echarts.init(echartsRef1.current);
       // 绘制图表
       myChart.setOption({
-        left: 200,
         legend: {
           data: ['增量', '总量'],
         },
@@ -95,56 +94,31 @@ const GetStartedECharts: React.FC = () => {
         tooltip: {
           trigger: 'axis',
         },
-        // 缩放
-        dataZoom: {
-          type: 'slider',
-          height: 10,
-          xAxisIndex: 0,
-          bottom: 0,
-          start: 0,
-          end: 8 / date.length > 1 ? 100 : (8 / date.length) * 100,
-          backgroundColor: 'rgba(0,0,0,0.05)',
-          borderColor: 'rgba(255, 255, 255, 0.1)',
-          fillerColor: 'rgba(255, 255, 255, 0.1)',
-          textStyle: {
-            color: '#AFBCC4',
-          },
-        },
         yAxis: [
           {
+            name: '增量',
             type: 'value',
-            // min: -30,
-            // max: 150,
-            max: Math.max(...Increment) + Math.max(...Increment) / 5,
-            // min: (-Math.max(...Increment) / 5) * 8,
-            min: () => {
-              const interval = Math.max(...Increment) / 5;
-              const min = Math.min(...Increment);
-              if (min > 0) return 0;
-
-              const minAbc = Math.abs(min);
-              const minInterval = Math.ceil(minAbc / interval);
-              return -(minInterval * (Math.max(...Increment) / 5));
+            max: (value: any) => (value.max * 6) / 5,
+            min: (value: any) => {
+              const interval = value.max / 5;
+              const min = value.min;
+              intervalNum = 0;
+              if (min < 0) {
+                const minAbc = Math.abs(min);
+                intervalNum = Math.ceil(minAbc / interval);
+              }
+              return -((intervalNum * value.max) / 5);
             },
-            // min: Math.min(...Increment)-(Math.max(...Increment) - Math.min(...Increment)) / 5,
             interval: Math.max(...Increment) / 5,
             axisTick: {
               alignWithLabel: true,
             },
           },
           {
+            name: '总量',
             type: 'value',
-            max: Math.max(...Total) + Math.max(...Total) / 5,
-            // min: -(Math.max(...Total) / 5) * 8,
-            min: () => {
-              const interval = Math.max(...Increment) / 5;
-              const min = Math.min(...Increment);
-              if (min > 0) return 0;
-
-              const minAbc = Math.abs(min);
-              const minInterval = Math.ceil(minAbc / interval);
-              return minInterval * (0 - Math.max(...Total) / 5);
-            },
+            max: (value: any) => (value.max * 6) / 5,
+            min: (value: any) => (-intervalNum * value.max) / 5,
             interval: Math.max(...Total) / 5,
             axisTick: {
               alignWithLabel: true,
@@ -161,7 +135,7 @@ const GetStartedECharts: React.FC = () => {
             symbolSize: 10,
             barMaxWidth: '30',
             itemStyle: {
-              color(data) {
+              color(data: any) {
                 // 设置正负颜色值
                 return data.value >= 0
                   ? {
@@ -208,6 +182,7 @@ const GetStartedECharts: React.FC = () => {
             data: Total,
             yAxisIndex: 1,
             type: 'line',
+            smooth: true,
             color: '#817AF2',
             symbolSize: 10,
             areaStyle: {
