@@ -1,11 +1,9 @@
 /**
  * 图表配置
  *
- * @param {array} sortNames 图例
  * @param {array} xAxisData x轴值
  * @param {array} yIncrementData y轴增量数据
  * @param {array} yTotalData y轴总量数据
- * @param {string} unit y周单位坐标
  * @param {number} intervalNum 可选值:正轴分割的段数 默认为5
  */
 
@@ -14,7 +12,7 @@ export default (
   yIncrementData: any[],
   yTotalData: any[],
   intervalNum: number = 5,
-) => {
+): object => {
   intervalNum = intervalNum - 1;
   let minIntervalNum = 0;
   const yIncrementMax = Math.max(...yIncrementData);
