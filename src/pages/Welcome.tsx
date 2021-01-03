@@ -34,7 +34,8 @@ export default (): React.ReactNode => (
           欢迎使用
         </a>
       </Typography.Text>
-      <CodePreview>react、umi</CodePreview>
+      <CodePreview>yarn</CodePreview>
+      <CodePreview>yarn start</CodePreview>
     </Card>
   </>
 );
