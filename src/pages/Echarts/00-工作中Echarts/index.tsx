@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, useEffect } from 'react';
 import { Card } from 'antd';
 
 import Chart01, { RefCurrent as RefCurrent01 } from './01';

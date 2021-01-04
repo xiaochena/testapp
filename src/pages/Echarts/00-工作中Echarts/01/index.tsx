@@ -46,12 +46,16 @@ const Chart = forwardRef<RefCurrent, ChartProps>((props, ref) => {
       // 初始化
       const myChart = echartsRef.current && echarts.init(echartsRef.current);
       myChart.setOption(chartConfig(xData, yIncrement, yTotal, intervalNum));
-      window.onresize = () => {
-        myChart.resize();
-      };
       setMyChart(myChart);
+
+      const echResize = () => myChart.resize();
+
+      window.addEventListener('resize', echResize);
+      return () => {
+        window.removeEventListener('resize', echResize);
+      };
     }
-  }, [echartsRef]);
+  }, [echartsRef.current]);
 
   useImperativeHandle(ref, () => ({
     echarts: myChart,
