@@ -24,6 +24,9 @@ export default (xAxisData: string[], yAxisData: YAxisData[]): object => {
     xAxis: {
       type: 'category',
       data: xAxisData,
+      axisTick: {
+        alignWithLabel: true,
+      },
     },
     yAxis: {
       type: 'value',
