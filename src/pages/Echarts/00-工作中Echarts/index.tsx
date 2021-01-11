@@ -3,12 +3,14 @@ import { Card } from 'antd';
 
 import Chart01, { RefCurrent as RefCurrent01 } from './01';
 import Chart02, { RefCurrent as RefCurrent02 } from './02';
+import Chart03, { RefCurrent as RefCurrent03 } from './03';
 
 import { DB_01, DB_02 } from './DB';
 
 const GetStartedECharts: React.FC = () => {
   const chartsRef1 = createRef<RefCurrent01>();
-  const chartsRef2: any = createRef<RefCurrent02>();
+  const chartsRef2 = createRef<RefCurrent02>();
+  const chartsRef3 = createRef<RefCurrent03>();
 
   return (
     <Card bodyStyle={{ display: 'flex' }} title="ECharts 入门示例">
@@ -25,6 +27,13 @@ const GetStartedECharts: React.FC = () => {
         ref={chartsRef2}
         xData={DB_02.xAxisData}
         yData={DB_02.yAxisData}
+      />
+
+      <Chart03
+        style={{ height: 300, flex: 1 }}
+        ref={chartsRef2}
+        xData={DB_01.data}
+        yData={DB_01.Increment}
       />
     </Card>
   );
