@@ -14,8 +14,9 @@ interface ChartProps {
   style?: CSSProperties;
   className?: string | undefined;
 
-  xData: string[];
-  yData: string[] | number[];
+  xData?: string[];
+  yData?: string[] | number[];
+  loading?: boolean;
 }
 
 export interface RefCurrent {
@@ -23,30 +24,40 @@ export interface RefCurrent {
 }
 
 const Chart = forwardRef<RefCurrent, ChartProps>((props, ref) => {
-  const { xData, yData, ...DivProps } = props;
+  const { xData = [], yData = [], loading, ...DivProps } = props;
   const echartsRef = createRef<HTMLDivElement>();
 
   const [myChart, setMyChart] = useState<echarts.ECharts>();
 
   useEffect(() => {
-    let echResize: any = '';
+    let echResize: () => void;
 
     if (echartsRef.current) {
       // 初始化
       const myChart = echartsRef.current && echarts.init(echartsRef.current);
       myChart.setOption(chartConfig(xData, yData));
       setMyChart(myChart);
+
+      // 加载状态
+      if (loading) {
+        myChart.showLoading('default', {
+          text: '',
+          color: '#FF7FBA',
+          textColor: '#000',
+          maskColor: 'rgba(255, 255, 255, 0.3)',
+        });
+      } else {
+        myChart.hideLoading();
+      }
+      // 监听边框大小是否发送变化修改 echarts
       echResize = () => myChart.resize();
       window.addEventListener('resize', echResize);
     }
-
+    // 移除监听
     return () => {
-      if (echResize !== '') {
-        console.log('resize');
-        window.removeEventListener('resize', echResize);
-      }
+      if (echResize) window.removeEventListener('resize', echResize);
     };
-  }, [echartsRef.current]);
+  }, [echartsRef.current, loading, xData, yData]);
 
   useImperativeHandle(ref, () => ({
     echarts: myChart,

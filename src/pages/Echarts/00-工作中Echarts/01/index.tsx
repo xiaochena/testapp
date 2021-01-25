@@ -21,10 +21,11 @@ import * as echarts from 'echarts';
 // import 'echarts/lib/component/legend';
 
 interface ChartProps {
-  xData: any[]; // x轴值
-  yIncrement: any[]; // y轴增量数据
-  yTotal: any[]; // y轴总量数据
+  xData?: any[]; // x轴值
+  yIncrement?: any[]; // y轴增量数据
+  yTotal?: any[]; // y轴总量数据
   intervalNum?: number; // 可选值:y轴正轴分割的段数 默认为5
+  loading?: boolean;
 
   style?: CSSProperties;
   className?: string | undefined;
@@ -35,28 +36,50 @@ export interface RefCurrent {
 }
 
 const Chart = forwardRef<RefCurrent, ChartProps>((props, ref) => {
-  const { xData, yIncrement, yTotal, intervalNum, ...DivProps } = props;
+  const {
+    xData = [],
+    yIncrement = [],
+    yTotal = [],
+    intervalNum = 5,
+    loading,
+    ...DivProps
+  } = props;
+
   const echartsRef = createRef<HTMLDivElement>();
 
   const [myChart, setMyChart] = useState<echarts.ECharts>();
   // const eChart;
 
   useEffect(() => {
+    let echResize: () => void;
     if (echartsRef.current) {
       // 初始化
       const myChart = echartsRef.current && echarts.init(echartsRef.current);
       myChart.setOption(chartConfig(xData, yIncrement, yTotal, intervalNum));
       setMyChart(myChart);
 
-      const echResize = () => myChart.resize();
-
+      // 加载状态
+      if (loading) {
+        myChart.showLoading('default', {
+          text: '',
+          color: '#FF7FBA',
+          textColor: '#000',
+          maskColor: 'rgba(255, 255, 255, 0.3)',
+        });
+      } else {
+        myChart.hideLoading();
+      }
+      // 监听边框大小是否发送变化修改 echarts
+      echResize = () => myChart.resize();
       window.addEventListener('resize', echResize);
-      return () => {
-        window.removeEventListener('resize', echResize);
-      };
     }
-  }, [echartsRef.current]);
+    // 移除监听
+    return () => {
+      if (echResize) window.removeEventListener('resize', echResize);
+    };
+  }, [echartsRef.current, xData, yIncrement, yTotal, intervalNum, loading]);
 
+  // 导出ref
   useImperativeHandle(ref, () => ({
     echarts: myChart,
   }));
