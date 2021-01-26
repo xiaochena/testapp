@@ -5,9 +5,9 @@ export default [
     icon: 'rocket',
     routes: [
       {
-        path: '/Echarts/00-工作中Echarts',
-        name: '00-工作中Echarts',
-        component: './Echarts/00-工作中Echarts',
+        path: '/Toy/Canvas',
+        name: 'canvas',
+        component: './Toy/Canvas',
       },
     ],
   },
