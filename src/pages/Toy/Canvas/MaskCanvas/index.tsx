@@ -14,25 +14,33 @@ const MaskCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
+  //#region
   // useEffect(() => {
   //   if (canvasRef.current && imageRef.current) {
   //     const canvas = canvasRef.current;
   //     const imageBg = imageRef.current;
   //     const canvasContext = canvas.getContext('2d');
+  //     const Img = new Image();
+  //     Img.src = imageBg?.src;
   //     //FILL CANVAS
   //     if (canvasContext) {
   //       // 设置画布的背景色以及背景大小
   //       canvasContext.fillStyle = 'rgba(0, 0, 0, 0.8)'; // fillStyle(color|gradient|pattern)
   //       canvasContext.fillRect(0, 0, canvas.width, canvas.height); // fillRect(x,y,width,height)
   //     }
+  //     Img.onload = () => {
+  //       if (canvasContext) {
+  //         canvasContext.drawImage(Img, 0, 0, canvas.width, canvas.height);
+  //       }
+  //     };
   //     //INIT
-  //     function init() {
-  //       document.addEventListener('mousemove', onMouseMove);
-  //       window.addEventListener('resize', resizeCanvases);
-  //       resizeCanvases();
-  //       tick();
-  //     }
-  //     init();
+  //     // function init() {
+  //     //   document.addEventListener('mousemove', onMouseMove);
+  //     //   window.addEventListener('resize', resizeCanvases);
+  //     //   resizeCanvases();
+  //     //   tick();
+  //     // }
+  //     // init();
 
   //     function onMouseMove(event: MouseEvent) {
   //       // let _points = {
@@ -67,59 +75,23 @@ const MaskCanvas = () => {
   //     }
   //   }
   // }, [canvasRef]);
-
-  const imageOnload = () => {
+  //#endregion
+  const imageOnLoad = () => {
     if (canvasRef.current && imageRef.current) {
       const canvas = canvasRef.current;
       const imageBg = imageRef.current;
       const canvasContext = canvas.getContext('2d');
-      //FILL CANVAS
       if (canvasContext) {
         // 设置画布的背景色以及背景大小
+        canvas.width = imageBg.width;
+        canvas.height = imageBg.height;
+        let { width: canvasW, height: canvasH } = canvas;
+        canvasContext.drawImage(imageBg, 0, 0, canvasW, canvasH);
         canvasContext.fillStyle = 'rgba(0, 0, 0, 0.8)'; // fillStyle(color|gradient|pattern)
-        canvasContext.fillRect(0, 0, canvas.width, canvas.height); // fillRect(x,y,width,height)
-      }
-      //INIT
-      function init() {
-        document.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('resize', resizeCanvases);
-        resizeCanvases();
-        tick();
-      }
-      init();
-
-      function onMouseMove(event: MouseEvent) {
-        // let _points = {
-        //   time: Date.now(),
-        //   x: event.clientX,
-        //   y: event.clientY + (document.documentElement.scrollTop || 0),
-        // };
-        // if (_points.y > 800) return;
-        // setPoints([...points, _points]);
-        // console.log(_points, 'points');
-      }
-
-      function resizeCanvases() {}
-
-      function tick() {
-        drawImageCanvas();
-      }
-
-      function drawImageCanvas() {
-        const img = new Image(); //创建一个Image对象，实现图片的预下载
-        img.src = IMG;
-        if (canvasContext) {
-          canvasContext.globalCompositeOperation = 'source-over';
-          img.onload = () => {
-            console.log('完成');
-
-            canvasContext.drawImage(img, 0, 0, 100, 100);
-          };
-          canvasContext.save();
-          canvasContext.restore();
-          canvasContext.globalCompositeOperation = 'destination-out';
-          // imageBg.style.opacity = '0';
-        }
+        canvasContext.fillRect(0, 0, canvasW, canvasH); // fillRect(x,y,width,height)
+        const imageData = canvasContext.getImageData(0, 0, canvasW, canvasH);
+        const pixelData = imageData.data;
+        console.log(pixelData, 'pixelData');
       }
     }
   };
@@ -127,10 +99,11 @@ const MaskCanvas = () => {
   return (
     <div id={style.maskCanvas}>
       <img
+        crossOrigin="anonymous"
         className={style.img}
-        onLoad={imageOnload}
         src={IMG}
         ref={imageRef}
+        onLoad={imageOnLoad}
       />
       <canvas className={style.canvas} ref={canvasRef}></canvas>
     </div>
