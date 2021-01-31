@@ -97,16 +97,20 @@ const MaskCanvas = () => {
   };
 
   return (
-    <div id={style.maskCanvas}>
-      <img
-        crossOrigin="anonymous"
-        className={style.img}
-        src={IMG}
-        ref={imageRef}
-        onLoad={imageOnLoad}
-      />
-      <canvas className={style.canvas} ref={canvasRef}></canvas>
-    </div>
+    <>
+      <p>https://weirenwu.weibo.com/taskv2/?c=index.home</p>
+      <p>没画出来</p>
+      <div id={style.maskCanvas}>
+        <img
+          crossOrigin="anonymous"
+          className={style.img}
+          src={IMG}
+          ref={imageRef}
+          onLoad={imageOnLoad}
+        />
+        <canvas className={style.canvas} ref={canvasRef}></canvas>
+      </div>
+    </>
   );
 };
 export default MaskCanvas;
