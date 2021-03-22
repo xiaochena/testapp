@@ -1,6 +1,7 @@
 import { Card, Space } from 'antd';
 import React from 'react';
 import ContextHook from './ContextHook';
+import ReducerHook from './ReducerHook';
 import StateHook from './StateHook';
 
 const HookComponent: React.FC = () => {
@@ -11,6 +12,9 @@ const HookComponent: React.FC = () => {
       </Card>
       <Card>
         <ContextHook />
+      </Card>
+      <Card>
+        <ReducerHook />
       </Card>
     </Space>
   );
