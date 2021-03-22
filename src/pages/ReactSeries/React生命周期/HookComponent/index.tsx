@@ -23,12 +23,6 @@ const Son = () => {
 };
 
 const Father = () => {
-  let i = 0;
-  while (i < 5000000000) {
-    i++;
-  }
-  console.log(i, 'i');
-
   console.log('父亲');
   useEffect(() => {
     console.log('父亲的useEffect');
