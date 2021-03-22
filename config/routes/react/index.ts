@@ -15,6 +15,11 @@ export default [
         component: './ReactSeries/React生命周期',
       },
       {
+        path: '/react_series/Hook',
+        name: 'React Hook',
+        component: './ReactSeries/Hook',
+      },
+      {
         path: '/react_series/Redux',
         name: 'Redux',
         component: './ReactSeries/Redux',
