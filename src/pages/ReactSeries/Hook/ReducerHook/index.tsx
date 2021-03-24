@@ -1,13 +1,15 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Button } from 'antd';
 
 const initialState = { count: 0 };
 const type = { increment: 'increment', decrement: 'decrement' };
 type stateType = typeof initialState;
-type actionType = { type: 'increment' | 'decrement' };
+interface IActionType {
+  type: 'increment' | 'decrement';
+}
 
 const ReducerHook = () => {
-  function reducer(state: stateType, action: actionType) {
+  function reducer(state: stateType, action: IActionType) {
     switch (action.type) {
       case type.increment:
         return { count: state.count + 1 };
