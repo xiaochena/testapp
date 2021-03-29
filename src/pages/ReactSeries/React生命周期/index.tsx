@@ -13,7 +13,7 @@ const ReactLifeCycle: React.FC = () => {
         <span>{showHook && <HookLifeCycle />}</span>
       </Card>
       <Card>
-        <Button onClick={() => setShowClass(!showClass)}>显示/隐藏hook</Button>
+        <Button onClick={() => setShowClass(!showClass)}>显示/隐藏Class</Button>
         <span>{showClass && <ClassLifeCycle />}</span>
       </Card>
     </>
