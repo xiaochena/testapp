@@ -2,6 +2,7 @@ import react from './react';
 import formily from './formily';
 import echarts from './echarts';
 import toy from './toy';
+import regular from './regular';
 
 export default [
   {
@@ -24,4 +25,5 @@ export default [
   ...formily,
   ...echarts,
   ...toy,
+  ...regular,
 ];
