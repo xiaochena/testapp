@@ -1,13 +1,13 @@
 export default [
   {
-    path: '/regular',
+    path: '/reg-exp',
     name: '正则表达式',
     icon: 'setting',
     routes: [
       {
-        path: '/regular/index',
+        path: '/reg-exp/index',
         name: '正则',
-        component: './RegularDemo',
+        component: './RegExp',
       },
     ],
   },
