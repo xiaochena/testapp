@@ -1,5 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Button, Card, Input, Space, Tag } from 'antd';
+
+import RegExpTest from './RegExpTest';
 import styles from './styles.less';
 
 const RegExpDemo: React.FC = () => {
@@ -35,70 +37,6 @@ const RegExpDemo: React.FC = () => {
         result：
         <span dangerouslySetInnerHTML={{ __html: result }} />
       </h2>
-    </Card>
-  );
-};
-
-// #region
-// const RegularDemo: React.FC<{ reg: RegExpMatchArray; str: string }> = () => {
-//   const World = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
-//   const [str, setStr] = useState('');
-
-//   const onClick = () => {
-//     let str = World.match(/[a-z]/g)?.join('') ?? '';
-//     setStr(str);
-//   };
-
-//   return (
-//     <div>
-//       <Card>
-//         <div>
-//           <Space>
-//             <span>{World}</span>
-//             <span>{str}</span>
-//           </Space>
-//         </div>
-//         <Button type="primary" onClick={onClick}>
-//           匹配 (/[a-z]/g)
-//         </Button>
-//       </Card>
-//     </div>
-//   );
-// };
-// #endregion
-
-const RegExpTest: React.FC<{ regExp?: string; str?: string }> = ({
-  regExp,
-  str,
-}) => {
-  const [result, setResult] = useState('');
-  useEffect(() => {
-    try {
-      if (regExp) {
-        const exp = new RegExp(regExp, 'g');
-        const result = str?.replace(
-          exp,
-          search => `<span style="color: red;">|${search}|</span>`,
-        );
-        setResult(result || str || '');
-      }
-    } catch (error) {}
-  }, [regExp, str]);
-
-  return (
-    <Card>
-      <Space>
-        <span>
-          字符串:<Tag>{str}</Tag>
-        </span>
-        <span>
-          正则:<Tag>{regExp}</Tag>
-        </span>
-        <span>
-          结果:
-          <span dangerouslySetInnerHTML={{ __html: result }} />
-        </span>
-      </Space>
     </Card>
   );
 };
