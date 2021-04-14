@@ -3,48 +3,12 @@ import { Button, Card, Input, Space, Tag } from 'antd';
 
 import RegExpTest from './RegExpTest';
 import styles from './styles.less';
-
-const RegExpDemo: React.FC = () => {
-  const [value, setValue] = useState('');
-  const [match, setMatch] = useState('');
-  const [result, setResult] = useState('-');
-
-  useEffect(() => {
-    try {
-      const exp = new RegExp(match, 'g');
-      const result =
-        match !== ''
-          ? value.replace(
-              exp,
-              search => `<span style="color: red;">|${search}|</span>`,
-            )
-          : value;
-      setResult(result);
-    } catch (error) {}
-  }, [match, value]);
-  return (
-    <Card>
-      <div>
-        <Space>
-          Str：
-          <Input value={value} onChange={e => setValue(e.target.value)} />
-          match：
-          <Input value={match} onChange={e => setMatch(e.target.value)} />
-          <Button>提交</Button>
-        </Space>
-      </div>
-      <h2>
-        result：
-        <span dangerouslySetInnerHTML={{ __html: result }} />
-      </h2>
-    </Card>
-  );
-};
+import RegExpOnline from './RegExpOnline';
 
 export default () => {
   return (
     <Card bodyStyle={{ padding: 0 }}>
-      <RegExpDemo />
+      <RegExpOnline />
       <Card bodyStyle={{ padding: 0 }}>
         <div className={styles.regExp}>
           <Card>
