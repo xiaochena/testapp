@@ -151,6 +151,28 @@ export default () => {
             <RegExpTest regExp="\w" str="今年是2_0_2_1year" />
             <RegExpTest regExp="\W" str="今年是2_0_2_1year" />
           </Card>
+          <Card>
+            字符属性
+            <RegExpTest regExp="\p{P}" str="P匹配标点符号" />
+            <RegExpTest regExp="\p{L}" str="L匹配英文" />
+            <RegExpTest regExp="\p{Han}" str="Han匹配中文" />
+          </Card>
+          <Card>
+            原子表
+            <RegExpTest regExp="[xa]" str="xiaochena" />
+            <RegExpTest regExp="\d{4}([-\/])\d{2}\1\d{2}" str="2020-02-03" />
+          </Card>
+          <Card>
+            排除匹配
+            <RegExpTest regExp="[^\da-z]" str="排除数字123和字母abc" />
+          </Card>
+          <Card>
+            原子组
+            <RegExpTest
+              regExp="<h1>"
+              str="<span>span不匹配</span><h1>匹配所有h标签</h1><h2>匹配所有h标签</h2>"
+            />
+          </Card>
         </div>
       </Card>
     </Card>
