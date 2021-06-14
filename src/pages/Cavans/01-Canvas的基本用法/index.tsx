@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Card } from 'antd';
 
 const Canvas_01: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -20,7 +21,13 @@ const Canvas_01: React.FC = () => {
       }
     }
   }, [canvasRef]);
-  return <canvas ref={canvasRef} />;
+  return (
+    <div>
+      <Card title="Canvas的基本用法">
+        <canvas ref={canvasRef} />
+      </Card>
+    </div>
+  );
 };
 
 export default Canvas_01;
