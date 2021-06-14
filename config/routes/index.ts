@@ -3,6 +3,7 @@ import formily from './formily';
 import echarts from './echarts';
 import toy from './toy';
 import regExp from './regExp';
+import cavans from './cavans';
 
 export default [
   {
@@ -26,4 +27,5 @@ export default [
   ...echarts,
   ...toy,
   ...regExp,
+  ...cavans,
 ];
