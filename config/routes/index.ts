@@ -4,6 +4,7 @@ import echarts from './echarts';
 import toy from './toy';
 import regExp from './regExp';
 import cavans from './cavans';
+import threeJs from './threeJs';
 
 export default [
   {
@@ -28,4 +29,5 @@ export default [
   ...toy,
   ...regExp,
   ...cavans,
+  ...threeJs,
 ];
