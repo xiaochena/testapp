@@ -9,6 +9,11 @@ export default [
         name: 'canvas',
         component: './Toy/Canvas',
       },
+      {
+        path: '/Toy/ShakeAndThrottling',
+        name: '防抖节流',
+        component: './Toy/ShakeAndThrottling',
+      },
     ],
   },
 ];
