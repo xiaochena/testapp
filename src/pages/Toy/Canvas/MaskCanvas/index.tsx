@@ -1,116 +1,168 @@
+/* eslint-disable */
 import React, { useEffect, useRef, useState } from 'react';
-import style from './style.less';
+import './styles.less';
 
-interface iPoint {
-  time: number;
-  x: number;
-  y: number;
-}
-
-const IMG =
-  'http://cdn.xiaochena.com/usr/themes/Mirages//images/article/article-001.png';
 const MaskCanvas = () => {
-  const [points, setPoints] = useState<iPoint[]>([]);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {}, []);
+  const onLoad = () => {
+    type HTMLCanvasElementType = HTMLCanvasElement | null;
+    let canvas: HTMLCanvasElementType = document.querySelector(
+      '#canvas-overlay',
+    );
+    let lineCanvas: HTMLCanvasElementType = document.querySelector(
+      '#canvas-lines',
+    );
 
-  //#region
-  // useEffect(() => {
-  //   if (canvasRef.current && imageRef.current) {
-  //     const canvas = canvasRef.current;
-  //     const imageBg = imageRef.current;
-  //     const canvasContext = canvas.getContext('2d');
-  //     const Img = new Image();
-  //     Img.src = imageBg?.src;
-  //     //FILL CANVAS
-  //     if (canvasContext) {
-  //       // 设置画布的背景色以及背景大小
-  //       canvasContext.fillStyle = 'rgba(0, 0, 0, 0.8)'; // fillStyle(color|gradient|pattern)
-  //       canvasContext.fillRect(0, 0, canvas.width, canvas.height); // fillRect(x,y,width,height)
-  //     }
-  //     Img.onload = () => {
-  //       if (canvasContext) {
-  //         canvasContext.drawImage(Img, 0, 0, canvas.width, canvas.height);
-  //       }
-  //     };
-  //     //INIT
-  //     // function init() {
-  //     //   document.addEventListener('mousemove', onMouseMove);
-  //     //   window.addEventListener('resize', resizeCanvases);
-  //     //   resizeCanvases();
-  //     //   tick();
-  //     // }
-  //     // init();
+    if (canvas) {
+      let canvasContext = canvas.getContext('2d');
+      let lineCanvasContext = lineCanvas?.getContext?.('2d');
+      let imageBg: HTMLImageElement | null = document.querySelector(
+        '#image--bg',
+      );
+      let pointLifetime = 500;
+      let isFirst = false;
+      let points: any[] = [];
 
-  //     function onMouseMove(event: MouseEvent) {
-  //       // let _points = {
-  //       //   time: Date.now(),
-  //       //   x: event.clientX,
-  //       //   y: event.clientY + (document.documentElement.scrollTop || 0),
-  //       // };
-  //       // if (_points.y > 800) return;
-  //       // setPoints([...points, _points]);
-  //       // console.log(_points, 'points');
-  //     }
-
-  //     function resizeCanvases() {}
-
-  //     function tick() {
-  //       drawImageCanvas();
-  //     }
-
-  //     function drawImageCanvas() {
-  //       const img = new Image(); //创建一个Image对象，实现图片的预下载
-  //       img.src = IMG;
-  //       if (canvasContext) {
-  //         canvasContext.globalCompositeOperation = 'source-over';
-  //         img.onload = () => {
-  //           canvasContext.drawImage(img, 10, 10, 100, 100);
-  //         };
-  //         canvasContext.save();
-  //         canvasContext.restore();
-  //         canvasContext.globalCompositeOperation = 'destination-out';
-  //         // imageBg.style.opacity = '0';
-  //       }
-  //     }
-  //   }
-  // }, [canvasRef]);
-  //#endregion
-  const imageOnLoad = () => {
-    if (canvasRef.current && imageRef.current) {
-      const canvas = canvasRef.current;
-      const imageBg = imageRef.current;
-      const canvasContext = canvas.getContext('2d');
       if (canvasContext) {
-        // 设置画布的背景色以及背景大小
-        canvas.width = imageBg.width;
-        canvas.height = imageBg.height;
-        let { width: canvasW, height: canvasH } = canvas;
-        canvasContext.drawImage(imageBg, 0, 0, canvasW, canvasH);
-        canvasContext.fillStyle = 'rgba(0, 0, 0, 0.8)'; // fillStyle(color|gradient|pattern)
-        canvasContext.fillRect(0, 0, canvasW, canvasH); // fillRect(x,y,width,height)
-        const imageData = canvasContext.getImageData(0, 0, canvasW, canvasH);
-        const pixelData = imageData.data;
-        console.log(pixelData, 'pixelData');
+        // FILL CANVAS
+        canvasContext.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+
+        // INIT
+        function init() {
+          const mainTopact: HTMLDivElement | null = document.querySelector(
+            '.main-topact',
+          );
+          mainTopact?.addEventListener('mousemove', onMouseMove);
+          // document.addEventListener('mousemove', onMouseMove);
+          window.addEventListener('resize', resizeCanvases);
+          resizeCanvases();
+          tick();
+        }
+
+        init();
+
+        //RESIZE CANVAS
+        function resizeCanvases() {
+          const mainTopact: HTMLDivElement | null = document.querySelector(
+            '.main-topact',
+          );
+          if (canvas && lineCanvas && mainTopact) {
+            canvas.width = lineCanvas.width = mainTopact.offsetWidth;
+            canvas.height = lineCanvas.height = mainTopact.offsetHeight;
+          }
+        }
+
+        function onMouseMove(event: MouseEvent) {
+          let _points = {
+            time: Date.now(),
+            x: event.offsetX,
+            y: event.offsetY + (document.documentElement.scrollTop || 0),
+          };
+          if (_points.y > 800) return;
+          points.push(_points);
+        }
+
+        function tick() {
+          // Remove old points
+          let _len = points.length;
+          points = points.filter(function(point) {
+            let age = Date.now() - point.time;
+            return age < pointLifetime;
+          });
+
+          requestAnimationFrame(tick);
+          if (points.length == 0 && _len != 0) return;
+          drawLineCanvas();
+          drawImageCanvas();
+        }
+
+        function drawLineCanvas() {
+          let minimumLineWidth = 70;
+          let maximumLineWidth = 140;
+          let lineWidthRange = maximumLineWidth - minimumLineWidth;
+          let maximumSpeed = 70;
+          if (lineCanvasContext && lineCanvas) {
+            lineCanvasContext.clearRect(
+              0,
+              0,
+              lineCanvas.width,
+              lineCanvas.height,
+            );
+            lineCanvasContext.lineCap = 'round';
+            lineCanvasContext.shadowBlur = 50;
+            lineCanvasContext.shadowColor = '#000';
+
+            for (let i = 1; i < points.length; i++) {
+              let point = points[i];
+              let previousPoint = points[i - 1];
+
+              // Change line width based on speed
+              let distance = getDistanceBetween(point, previousPoint);
+              let speed = Math.max(0, Math.min(maximumSpeed, distance));
+              let percentageLineWidth = (maximumSpeed - speed) / maximumSpeed;
+              lineCanvasContext.lineWidth =
+                minimumLineWidth + percentageLineWidth * lineWidthRange;
+
+              // Fade points as they age
+              let age = Date.now() - point.time;
+              let opacity = (pointLifetime - age) / pointLifetime;
+              lineCanvasContext.strokeStyle = 'rgba(0, 0, 0, ' + opacity + ')';
+
+              lineCanvasContext.beginPath();
+              lineCanvasContext.moveTo(previousPoint.x, previousPoint.y);
+              lineCanvasContext.lineTo(point.x, point.y);
+              lineCanvasContext.stroke();
+            }
+          }
+        }
+
+        function getDistanceBetween(a: any, b: any) {
+          return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+        }
+
+        function drawImageCanvas() {
+          if (canvasContext && lineCanvas && imageBg && canvas) {
+            canvasContext.globalCompositeOperation = 'source-over';
+            canvasContext.drawImage(
+              imageBg,
+              0,
+              0,
+              1920,
+              800,
+              0,
+              0,
+              canvas.width,
+              canvas.height,
+            );
+            canvasContext.save();
+            // console.log(canvas.width);
+            // canvasContext.fillStyle="rgba(0, 0, 0,0.65)";
+            // canvasContext.globalAlpha = 0.009;
+            // canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+
+            canvasContext.restore();
+            canvasContext.globalCompositeOperation = 'destination-out';
+            // console.log(lineCanvas.height)
+            if (lineCanvas.height == 0) return resizeCanvases();
+            imageBg.style.opacity = '0';
+            canvasContext.drawImage(lineCanvas, 0, 0);
+          }
+        }
       }
     }
   };
 
   return (
-    <>
-      <p>https://weirenwu.weibo.com/taskv2/?c=index.home</p>
-      <p>没画出来</p>
-      <div id={style.maskCanvas}>
-        <img
-          crossOrigin="anonymous"
-          className={style.img}
-          src={IMG}
-          ref={imageRef}
-          onLoad={imageOnLoad}
-        />
-        <canvas className={style.canvas} ref={canvasRef}></canvas>
-      </div>
-    </>
+    <div className="main-topact">
+      <img
+        onLoad={onLoad}
+        id="image--bg"
+        src="https://weirenwu.weibo.com/wrw/images/img/phtwall_blur.png?v=1589014457297"
+      />
+      <canvas id="canvas-overlay" />
+      <canvas id="canvas-lines" />
+    </div>
   );
 };
 export default MaskCanvas;
