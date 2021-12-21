@@ -90,7 +90,7 @@ const MaskCanvas = () => {
               lineCanvas.height,
             );
             lineCanvasContext.lineCap = 'round';
-            lineCanvasContext.shadowBlur = 50;
+            // lineCanvasContext.shadowBlur = 0;
             lineCanvasContext.shadowColor = '#000';
 
             for (let i = 1; i < points.length; i++) {

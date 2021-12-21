@@ -6,8 +6,13 @@ export default [
     routes: [
       {
         path: '/Toy/Canvas',
-        name: 'canvas',
+        name: 'Canvas',
         component: './Toy/Canvas',
+      },
+      {
+        path: '/Toy/MyCanvas',
+        name: 'MyCanvas',
+        component: './Toy/MyCanvas',
       },
       {
         path: '/Toy/ShakeAndThrottling',
