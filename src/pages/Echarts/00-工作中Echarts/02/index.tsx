@@ -63,7 +63,7 @@ const Chart = forwardRef<RefCurrent, ChartProps>((props, ref) => {
     return () => {
       window.removeEventListener('resize', echResize);
     };
-  }, [echartsRef.current, xData, yData, loading]);
+  }, [xData, yData, loading, echartsRef]);
 
   useImperativeHandle(ref, () => ({
     echarts: myChart,
