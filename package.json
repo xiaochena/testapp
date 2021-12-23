@@ -27,7 +27,6 @@
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.2.27",
     "antd": "^4.15.0",
-    "caniuse-lite": "^1.0.30001286",
     "echarts": "^4.9.0",
     "highlight.js": "^10.3.2",
     "lint-staged": "^10.0.7",

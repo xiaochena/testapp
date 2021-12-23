@@ -8,8 +8,8 @@ import Chart03, { RefCurrent as RefCurrent03 } from './03';
 import { getEcharts_DB } from '@/services/Echarts/00-workOnEcharts';
 
 const GetStartedECharts: React.FC = () => {
-  const [DB_01, setDB_01] = useState<iDB_01>();
-  const [DB_02, setDB_02] = useState<iDB_02>();
+  const [DB_01, setDB_01] = useState<any>();
+  const [DB_02, setDB_02] = useState<any>();
   const [loading, setLoading] = useState(false);
   const chartsRef1 = createRef<RefCurrent01>();
   const chartsRef2 = createRef<RefCurrent02>();

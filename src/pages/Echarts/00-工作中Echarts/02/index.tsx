@@ -4,8 +4,8 @@ import React, {
   createRef,
   forwardRef,
   useImperativeHandle,
+  CSSProperties,
 } from 'react';
-import { CSSProperties } from 'react';
 import chartConfig from './chartConfig';
 
 import * as echarts from 'echarts';
@@ -69,7 +69,7 @@ const Chart = forwardRef<RefCurrent, ChartProps>((props, ref) => {
     echarts: myChart,
   }));
 
-  return <div ref={echartsRef} {...DivProps}></div>;
+  return <div ref={echartsRef} {...DivProps} />;
 });
 
 export default Chart;
