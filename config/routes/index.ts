@@ -5,6 +5,7 @@ import toy from './toy';
 import regExp from './regExp';
 import cavans from './cavans';
 import threeJs from './threeJs';
+import css from './cssDemo';
 
 export default [
   {
@@ -30,4 +31,5 @@ export default [
   ...regExp,
   ...cavans,
   ...threeJs,
+  ...css,
 ];
